@@ -19,6 +19,7 @@ itself. This isn't necessary, but it is recommended.
 */
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Easy_63
 {
@@ -30,16 +31,16 @@ public class Easy_63
 		return arr;
 	}
 
-	public void reverse()
+	public void reverse(int digits)
 	{
-		if( N > arr.length || N <= 1 )
+		if( digits > arr.length || digits <= 1 )
 			return;
 
-		for( int i = 0; i < N / 2; i++ )
+		for( int i = 0; i < digits / 2; i++ )
 		{
 			int temp = arr[i];
-			arr[i] = arr[N - 1 - i];
-			arr[N - 1 - i] = temp;
+			arr[i] = arr[digits - 1 - i];
+			arr[digits - 1 - i] = temp;
 		}
 	}
 
@@ -48,7 +49,11 @@ public class Easy_63
 		Easy_63 e63 = new Easy_63();
 		System.out.println( Arrays.toString( e63.getArr() ) );
 
-		e63.reverse();
+		System.out.println( "How many digits would you like to reverse?" );
+		Scanner scanner = new Scanner( System.in );
+		int digits = Integer.parseInt(scanner.nextLine());
+
+		e63.reverse(digits);
 
 		System.out.println( Arrays.toString( e63.getArr() ) );
 	}
