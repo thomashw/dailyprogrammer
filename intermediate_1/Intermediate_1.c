@@ -9,7 +9,6 @@ and receive prompts and instructions telling you how
 to use the program, it will probably be fine)
 */
 
-#include "Intermediate_1.h"
 #include "Date.h"
 
 int main( int argc, char* argv )
