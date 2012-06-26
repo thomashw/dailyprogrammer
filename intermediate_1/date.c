@@ -4,6 +4,7 @@
 
 static void increase_dates_size();
 static void process_date(struct Date d);
+static void sort_dates();
 
 struct Date* dates;
 int dates_size = 0;
@@ -137,34 +138,60 @@ static void increase_dates_size()
 
 static void process_date(struct Date d)
 {
-	if( dates_size == 0 )
-	{
-		dates[dates_size++] = d;
-	}
-	else
-	{
-		int index = 0;
-		struct Date temp = dates[index];
+	dates[dates_size++] = d;
+	sort_dates();
+}
 
-		while(((d.year > temp.year) ||
-			(d.year == temp.year && d.month > temp.month) ||
-			(d.year == temp.year && d.month == temp.month && d.day > temp.day) ||
-			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour > temp.hour) ||
-			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour == temp.hour && d.minute > temp.minute) ||
-			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour == temp.hour && d.minute == temp.minute && d.second == temp.second)) &&
-			index < dates_size)
-		{
-			temp = dates[++index];
-		}
-		
-		int i;
-		for(i = dates_size; i > index; i--)
-		{
-			dates[i] = dates[i-1];
-		}
+static DateCompare compare_dates(struct Date d1, struct Date d2)
+{
+	if(d1.year < d2.year)
+		return DateCompareLessThan;
+	if(d1.year > d2.year)
+		return DateCompareGreaterThan;
 
-		dates[index] = d;
-		dates_size++;
+	if(d1.month < d2.month)
+		return DateCompareLessThan;
+	if(d1.month > d2.month)
+		return DateCompareGreaterThan;
+
+	if(d1.day < d2.day)
+		return DateCompareLessThan;
+	if(d1.day > d2.day)
+		return DateCompareGreaterThan;
+
+	if(d1.hour < d2.hour)
+		return DateCompareLessThan;
+	if(d1.hour > d2.hour)
+		return DateCompareGreaterThan;
+
+	if(d1.minute < d2.minute)
+		return DateCompareLessThan;
+	if(d1.minute > d2.minute)
+		return DateCompareGreaterThan;
+
+	if(d1.second < d2.second)
+		return DateCompareLessThan;
+	if(d1.second > d2.second)
+		return DateCompareGreaterThan;
+
+	return DateCompareEqualTo;
+}
+
+static void sort_dates()
+{
+	int i, j;
+	struct Date d;
+	for(i = 0; i < dates_size-1; i++)
+	{
+		for(j = 0; j < dates_size-1; j++)
+		{
+			if(compare_dates(dates[j], dates[j+1]) == DateCompareGreaterThan)
+			{
+				d = dates[j+1];
+				dates[j+1] = dates[j];
+				dates[j] = d;
+			}
+		}
 	}
 }
 
@@ -187,23 +214,36 @@ void print_dates()
 	printf("\n");	
 }
 
-void remove_date(int index)
+void remove_date(int key)
 {
 	struct Date temp;
 	int i;
 
-	index--;
+	key--;
 
-	if(index < 0 || index > dates_size - 1)
+	if(key < 0 || key > dates_size - 1)
 	{
 		printf("\nInvalid selection.");
 		return;
 	}
 
-	for(i = index; i < dates_size-1; i++)
+	for(i = key; i < dates_size-1; i++)
 	{
 		dates[i] = dates[i+1];
 	}
 
 	dates_size--;
+}
+
+void edit_date(int key)
+{
+	key--;
+
+	struct Date d = read_date();
+
+	if( validate_date( d ) )
+	{
+		dates[key] = d;
+		sort_dates();
+	}
 }

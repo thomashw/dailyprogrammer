@@ -5,6 +5,7 @@
 
 static void respond_to_selection(EventMenu t);
 static void delete_date();
+static void menu_edit_date();
 static void say_hello();
 static void exit_app();
 
@@ -41,6 +42,7 @@ static void respond_to_selection(EventMenu t)
 			add_date();
 			break;
 		case EventMenuEdit:
+			menu_edit_date();
 			break;
 		case EventMenuDelete:
 			delete_date();
@@ -54,6 +56,21 @@ static void respond_to_selection(EventMenu t)
 		default:
 			printf("\nInvalid selection.");
 	}
+}
+
+static void menu_edit_date()
+{
+	int t;
+
+	print_dates();
+
+	printf("\n\nWhich date would you like to edit? ");
+	char c[10];
+
+	fgets(c, sizeof(c), stdin);
+	sscanf(c, "%d", &t);
+
+	edit_date(t);
 }
 
 static void delete_date()
