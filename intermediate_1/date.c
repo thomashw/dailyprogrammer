@@ -2,9 +2,16 @@
 #include "global.h"
 #include "date.h"
 
-struct Date dates[10];
+struct Date* dates;
 int dates_size = 0;
-int dates_capacity = 10;
+int dates_capacity = 0;
+
+void init_date()
+{
+	dates = (struct Date*)calloc( INIT_DATE_CAPACITY, sizeof(struct Date));
+	dates_capacity = INIT_DATE_CAPACITY;
+	dates_size = 0;
+}
 
 static struct Date new_date( int day, int month, int year, int hour, int minute, int second )
 {
@@ -96,13 +103,27 @@ static struct Date read_date()
 void add_date()
 {
 	struct Date d = read_date();
+	struct Date *temp;
 
 	if( validate_date( d ) ) {
+		if(dates_size > (dates_capacity - 1))
+		{
+			temp = (struct Date*)realloc(dates, dates_capacity * 2 * sizeof(struct Date));
 
-		if( dates_size < (dates_capacity - 1) )
-			dates[dates_size++] = d;
-	//else
-		#warning increase dates array size & then add
+			if(temp != NULL)
+			{
+				dates = temp;
+				dates_capacity *= 2;
+			}
+			else
+			{
+				free(dates);
+				printf("\nError reallocating memory.");
+				exit(1);
+			}
+		}
+
+		dates[dates_size++] = d;
 	}
 }
 

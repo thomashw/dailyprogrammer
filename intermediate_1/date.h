@@ -10,7 +10,10 @@ struct Date {
 	int second;
 };
 
+void init_date();
 void add_date();
 void print_dates();
+
+#define INIT_DATE_CAPACITY 10
 
 #endif

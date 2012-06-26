@@ -11,6 +11,8 @@ to use the program, it will probably be fine)
 
 int main( int argc, char* argv )
 {
+	init_date();
+
 	while( 1 )
 	{
 		menu();
