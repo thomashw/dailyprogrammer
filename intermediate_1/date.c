@@ -186,3 +186,24 @@ void print_dates()
 
 	printf("\n");	
 }
+
+void remove_date(int index)
+{
+	struct Date temp;
+	int i;
+
+	index--;
+
+	if(index < 0 || index > dates_size - 1)
+	{
+		printf("\nInvalid selection.");
+		return;
+	}
+
+	for(i = index; i < dates_size-1; i++)
+	{
+		dates[i] = dates[i+1];
+	}
+
+	dates_size--;
+}

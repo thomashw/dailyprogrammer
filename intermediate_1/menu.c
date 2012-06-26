@@ -4,6 +4,7 @@
 #include "date.h"
 
 static void respond_to_selection(EventMenu t);
+static void delete_date();
 static void say_hello();
 static void exit_app();
 
@@ -42,6 +43,7 @@ static void respond_to_selection(EventMenu t)
 		case EventMenuEdit:
 			break;
 		case EventMenuDelete:
+			delete_date();
 			break;
 		case EventMenuPrint:
 			print_dates();
@@ -52,6 +54,21 @@ static void respond_to_selection(EventMenu t)
 		default:
 			printf("\nInvalid selection.");
 	}
+}
+
+static void delete_date()
+{
+	int t;
+
+	print_dates();
+
+	printf("\n\nWhich date would you like to delete? ");
+	char c[10];
+
+	fgets(c, sizeof(c), stdin);
+	sscanf(c, "%d", &t);
+
+	remove_date(t);
 }
 
 static void say_hello()

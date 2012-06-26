@@ -12,6 +12,7 @@ struct Date {
 
 void init_date();
 void add_date();
+void remove_date(int index);
 void print_dates();
 
 #define INIT_DATE_CAPACITY 10
