@@ -107,7 +107,8 @@ void add_date()
 {
 	struct Date d = read_date();
 
-	if( validate_date( d ) ) {
+	if( validate_date( d ) )
+	{
 		if(dates_size > (dates_capacity - 1))
 		{
 			increase_dates_size();
@@ -145,37 +146,17 @@ static void process_date(struct Date d)
 		int index = 0;
 		struct Date temp = dates[index];
 
-#warning lots of while-loops
-		while( d.year > temp.year && index < dates_size )
+		while(((d.year > temp.year) ||
+			(d.year == temp.year && d.month > temp.month) ||
+			(d.year == temp.year && d.month == temp.month && d.day > temp.day) ||
+			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour > temp.hour) ||
+			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour == temp.hour && d.minute > temp.minute) ||
+			(d.year == temp.year && d.month == temp.month && d.day == temp.day && d.hour == temp.hour && d.minute == temp.minute && d.second == temp.second)) &&
+			index < dates_size)
 		{
 			temp = dates[++index];
 		}
-
-		while( d.month > temp.month && index < dates_size )
-		{
-			temp = dates[++index];
-		}
-
-		while( d.day > temp.day && index < dates_size )
-		{
-			temp = dates[++index];
-		}
-
-		while( d.hour > temp.hour && index < dates_size )
-		{
-			temp = dates[++index];
-		}
-
-		while( d.minute > temp.minute && index < dates_size )
-		{
-			temp = dates[++index];
-		}
-
-		while( d.second > temp.second && index < dates_size )
-		{
-			temp = dates[++index];
-		}
-
+		
 		int i;
 		for(i = dates_size; i > index; i--)
 		{
@@ -191,14 +172,13 @@ void print_dates()
 {
 	int i;
 
-	printf("\nDay\tMonth\tYear\tHour\tMinute\tSecond");
+	printf("\nYear\tMonth\tDay\tHour\tMinute\tSecond");
 
-#warning move columns
 	for( i = 0; i < dates_size; i++ )
 	{
-		printf( "\n%d", dates[i].day );
+		printf( "\n%d", dates[i].year );
 		printf( "\t%d", dates[i].month );
-		printf( "\t%d", dates[i].year );
+		printf( "\t%d", dates[i].day );
 		printf( "\t%d", dates[i].hour );
 		printf( "\t%d", dates[i].minute );
 		printf( "\t%d", dates[i].second );
