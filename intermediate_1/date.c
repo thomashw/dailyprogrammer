@@ -131,13 +131,15 @@ void print_dates()
 {
 	int i;
 
+	printf("\nDay\tMonth\tYear\tHour\tMinute\tSecond");
+
 	for( i = 0; i < dates_size; i++ )
 	{
-		printf( "\nDay: \t%d", dates[i].day );
-		printf( "\nMonth: \t%d", dates[i].month );
-		printf( "\nYear: \t%d", dates[i].year );
-		printf( "\nHour: \t%d", dates[i].hour );
-		printf( "\nMin: \t%d", dates[i].minute );
-		printf( "\nSec: \t%d\n", dates[i].second );
+		printf( "\n%d", dates[i].day );
+		printf( "\t%d", dates[i].month );
+		printf( "\t%d", dates[i].year );
+		printf( "\t%d", dates[i].hour );
+		printf( "\t%d", dates[i].minute );
+		printf( "\t%d", dates[i].second );
 	}
 }
