@@ -172,15 +172,17 @@ void print_dates()
 {
 	int i;
 
-	printf("\nYear\tMonth\tDay\tHour\tMinute\tSecond");
+	printf("\n\tYear\tMonth\tDay\tHour\tMinute\tSecond");
 
 	for( i = 0; i < dates_size; i++ )
 	{
-		printf( "\n%d", dates[i].year );
-		printf( "\t%d", dates[i].month );
-		printf( "\t%d", dates[i].day );
-		printf( "\t%d", dates[i].hour );
-		printf( "\t%d", dates[i].minute );
-		printf( "\t%d", dates[i].second );
+		printf( "\n%d.\t%d",i+1, dates[i].year );
+		printf( "\t%d",dates[i].month );
+		printf( "\t%d",dates[i].day );
+		printf( "\t%d",dates[i].hour );
+		printf( "\t%d",dates[i].minute );
+		printf( "\t%d",dates[i].second );
 	}
+
+	printf("\n");	
 }
