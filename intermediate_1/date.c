@@ -2,6 +2,9 @@
 #include "global.h"
 #include "date.h"
 
+static void increase_dates_size();
+static void process_date(struct Date d);
+
 struct Date* dates;
 int dates_size = 0;
 int dates_capacity = 0;
@@ -103,27 +106,84 @@ static struct Date read_date()
 void add_date()
 {
 	struct Date d = read_date();
-	struct Date *temp;
 
 	if( validate_date( d ) ) {
 		if(dates_size > (dates_capacity - 1))
 		{
-			temp = (struct Date*)realloc(dates, dates_capacity * 2 * sizeof(struct Date));
-
-			if(temp != NULL)
-			{
-				dates = temp;
-				dates_capacity *= 2;
-			}
-			else
-			{
-				free(dates);
-				printf("\nError reallocating memory.");
-				exit(1);
-			}
+			increase_dates_size();
 		}
 
+		process_date(d);
+	}
+}
+
+static void increase_dates_size()
+{
+	struct Date *temp = (struct Date*)realloc(dates, dates_capacity * 2 * sizeof(struct Date));
+
+	if(temp != NULL)
+	{
+		dates = temp;
+		dates_capacity *= 2;
+	}
+	else
+	{
+		free(dates);
+		printf("\nError reallocating memory.");
+		exit(1);
+	}
+}
+
+static void process_date(struct Date d)
+{
+	if( dates_size == 0 )
+	{
 		dates[dates_size++] = d;
+	}
+	else
+	{
+		int index = 0;
+		struct Date temp = dates[index];
+
+#warning lots of while-loops
+		while( d.year > temp.year && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		while( d.month > temp.month && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		while( d.day > temp.day && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		while( d.hour > temp.hour && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		while( d.minute > temp.minute && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		while( d.second > temp.second && index < dates_size )
+		{
+			temp = dates[++index];
+		}
+
+		int i;
+		for(i = dates_size; i > index; i--)
+		{
+			dates[i] = dates[i-1];
+		}
+
+		dates[index] = d;
+		dates_size++;
 	}
 }
 
@@ -133,6 +193,7 @@ void print_dates()
 
 	printf("\nDay\tMonth\tYear\tHour\tMinute\tSecond");
 
+#warning move columns
 	for( i = 0; i < dates_size; i++ )
 	{
 		printf( "\n%d", dates[i].day );
