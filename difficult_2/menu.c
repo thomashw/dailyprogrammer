@@ -5,14 +5,6 @@
 #define COMMAND_STOP "STOP\n"
 #define COMMAND_LAP "LAP\n"
 
-typedef enum
-{
-	CommandStart = 0,
-	CommandStop,
-	CommandLap,
-	CommandCount
-} Command;
-
 static void readCommand();
 
 void print_greeting()
