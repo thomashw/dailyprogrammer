@@ -1,0 +1,9 @@
+4
+CarriageBolt 45
+Eyebolt 50
+Washer 120
+Rivet 10
+CarriageBolt 45
+Eyebolt 45
+Washer 140
+Rivet 10
