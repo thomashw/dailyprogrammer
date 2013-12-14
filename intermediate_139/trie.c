@@ -4,6 +4,7 @@
 #include "trie.h"
 
 typedef struct trie_node {
+	int is_word;
 	char key;
 	struct trie_node *next, *children;
 } trie_node;
@@ -41,6 +42,7 @@ trie_node * add_child( trie_node *node, char c);
 trie_node * create_node(char c)
 {
 	trie_node *new_node = (trie_node *)malloc(sizeof(trie_node));
+	new_node->is_word = 0;
 	new_node->key = c;
 	new_node->next = NULL;
 	new_node->children = NULL;
@@ -81,11 +83,17 @@ int add_word(trie_root_node *root_node, char word[])
 		c++;
 	}
 
-	while(*c != '\0')
+	while(1)
 	{
 		//printf("Adding child: %c under %c\n", *c, current_node->key);
 		current_node = add_child(current_node, *c);
 		c++;
+
+		if(*c == '\0')
+		{
+			current_node->is_word = 1;
+			break;
+		}
 	}
 
 	return 1;
